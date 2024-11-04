@@ -36,7 +36,6 @@ fun HomeScreen() {
 		},
 	) { padding ->
 		NotesList(modifier = Modifier.padding(padding), noteList = dummyNotes) {
-
 		}
 	}
 }

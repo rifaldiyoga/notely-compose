@@ -22,29 +22,33 @@ import com.tes.notely.presentations.onboarding.Page
 @Composable
 fun NotesList(
 	modifier: Modifier = Modifier,
-	noteList: List<Note>,
+	noteList: LazyPagingItems<Note>,
 	onClick: (Note) -> Unit
 ) {
 
-//	val handlePagingResult = handlePagingResult(noteList)
+	val handlePagingResult = handlePagingResult(noteList)
 
 	ShimmerEffect(modifier = modifier.fillMaxSize())
 
-//	LazyVerticalStaggeredGrid(
-//		columns = StaggeredGridCells.Fixed(2),
-//		modifier = modifier.fillMaxSize(),
-//		verticalItemSpacing = 12.dp,
-//		horizontalArrangement = Arrangement.spacedBy(12.dp),
-//		contentPadding = PaddingValues(all = 16.dp)
-//	) {
-//		items(
-//			count = noteList.size,
-//		) {
-//			noteList[it].let { article ->
-//				NoteCard(note = article)
-//			}
-//		}
-//	}
+	LazyVerticalStaggeredGrid(
+		columns = StaggeredGridCells.Fixed(2),
+		modifier = modifier.fillMaxSize(),
+		verticalItemSpacing = 12.dp,
+		horizontalArrangement = Arrangement.spacedBy(12.dp),
+		contentPadding = PaddingValues(all = 16.dp)
+	) {
+		items(
+			count = noteList.itemCount,
+		) {
+			noteList[it].let { note ->
+				note?.let {
+					NoteCard(note = note, onClick = {
+						onClick(note)
+					})
+				}
+			}
+		}
+	}
 
 }
 
